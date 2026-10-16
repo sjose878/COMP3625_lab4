@@ -10,15 +10,30 @@ import csv
 import math
 import matplotlib.pyplot as plt
 
-PAYOUT_FAIL = 0
-
 data = []
 client_a_plots = []
 client_b_plots = []
 client_c_plots = []
 
-def calc_perceived_util(payout: int, probability: float):
-    return probability*payout + (1-probability)*PAYOUT_FAIL
+def calc_perceived_util(payout: int, probability: float, client: str):
+    if client == 'clientA':
+        return probability*util_client_a(payout) + (1-probability)*util_client_a(0)
+    elif client == 'clientB':
+        return probability*util_client_b(payout) + (1-probability)*util_client_b(0)
+    elif client == 'clientC':
+        return probability*util_client_c(payout) + (1-probability)*util_client_c(0)
+    else:
+        return -1
+
+def util_inverse (eu: float, client: str):
+    if client == 'clientA':
+        return 1000 * (math.exp(eu/0.2) - 1)
+    elif client == 'clientB':
+        return 200 * (math.exp(eu/0.14) - 1)
+    elif client == 'clientC':
+        return 100000 * (math.exp(eu/1.43) - 1)
+    else:
+        return -1
 
 # Utility functions
 def util_client_a(dollars: int):
@@ -53,16 +68,26 @@ plt.plot(client_c_plots, color='green', label='Client C')
 plt.legend()
 plt.show()
 
-# TASk 2: compute percieved values of investment
+# TASk 2: compute perceived values of investment
 data = np.array(data)
 print(data)
+perceived_values = []
 
-# client A investment 1
-# U(success) = 80000
-# U(failure) = 0
-# P(payout|success) = 0.6
-investment_a_1_prob = float(data[0][1])
-investment_a_1_payout = int(data[0][2])
-investment_a_1_util = calc_perceived_util(investment_a_1_payout,investment_a_1_prob)
+#task 1
+for i in data:
+    investment_client = str(i[0])
+    investment_prob = float(i[1])
+    investment_payout = int(i[2])
+    investment_perceived_util = calc_perceived_util(investment_payout, investment_prob, investment_client)
+    perceived_values.append([investment_perceived_util, investment_client])
 
-print(investment_a_1_util)
+print(f'Each client’s perceived utility of each investment: {perceived_values}')
+
+#task 2
+indifferent_offers = []
+
+for i in perceived_values:
+    dollars_offer = util_inverse(i[0], i[1])
+    indifferent_offers.append([dollars_offer, i[1]])
+
+print(f'Amount that you could offer each client for each investment for them to be indifferent: {indifferent_offers}')
