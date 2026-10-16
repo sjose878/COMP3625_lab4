@@ -140,6 +140,6 @@ investment_utils_max_price = np.array(investment_utils_max_price)
 investment_utils = [perceived_values[0][0], perceived_values[1][0], perceived_values[2][0]]
 investment_util_diff = investment_utils_max_price - investment_utils
 
-# can ignore clientB. These are the utility gains for client A and client C.
-print(f'\nUtility gain for client A: {investment_util_diff[0]}')
-print(f'Utility gain for client C {investment_util_diff[2]}')
+# can ignore client B. These are the utility gains for client A and client C.
+print(f'\nUtility gain for client A: {investment_util_diff[0]}') #for selling above their indifference value, A will have a positive utility gain.
+print(f'Utility gain for client C {investment_util_diff[2]}') #for buying at max price, C gains nothing. 
