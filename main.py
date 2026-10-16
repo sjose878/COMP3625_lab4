@@ -68,12 +68,12 @@ plt.plot(client_c_plots, color='green', label='Client C')
 plt.legend()
 plt.show()
 
-# TASk 2: compute perceived values of investment
+# TASK 2: compute perceived values of investment
 data = np.array(data)
 print(data)
 perceived_values = []
 
-#task 1
+#part 1
 for i in data:
     investment_client = str(i[0])
     investment_prob = float(i[1])
@@ -83,7 +83,7 @@ for i in data:
 
 print(f'Each client’s perceived utility of each investment: {perceived_values}')
 
-#task 2
+#part 2
 indifferent_offers = []
 
 for i in perceived_values:
@@ -91,3 +91,9 @@ for i in perceived_values:
     indifferent_offers.append([dollars_offer, i[1]])
 
 print(f'Amount that you could offer each client for each investment for them to be indifferent: {indifferent_offers}')
+
+#TASK 3: Reflection
+#1. To whom should each of the 6 investments be sold? Why?
+
+
+#2. Pick one investment that should be sold. Who should it be sold to, and what is the maximum price it could be sold for? What utility gain is provided to each party at that price?
