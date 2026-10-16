@@ -90,10 +90,64 @@ for i in perceived_values:
     dollars_offer = util_inverse(i[0], i[1])
     indifferent_offers.append([dollars_offer, i[1]])
 
-print(f'Amount that you could offer each client for each investment for them to be indifferent: {indifferent_offers}')
+#print(f'Amount that you could offer each client for each investment for them to be indifferent: {indifferent_offers}')
+print(f'Amount that you could offer each client for each investment for them to be indifferent:')
+for offer in indifferent_offers:
+    print(offer)
 
 #TASK 3: Reflection
 #1. To whom should each of the 6 investments be sold? Why?
 
 
 #2. Pick one investment that should be sold. Who should it be sold to, and what is the maximum price it could be sold for? What utility gain is provided to each party at that price?
+# Let's choose client A's first investment. P = 0.6 and payout = 80000
+
+# Find the utility for all clients if they took the first investment
+invest_payout_a1 = int(data[0][2])
+invest_prob_a1 = float(data[0][1])
+investment_utils = []
+for i in range(0, 6, 2):
+    if i <= 1:
+        client = 'clientA'
+    elif i <= 3:
+        client = 'clientB'
+    else:
+        client = 'clientC'
+    investment_utils.append(calc_perceived_util(invest_payout_a1,invest_prob_a1, client))
+investment_utils = np.array(investment_utils)
+
+# Calculate the indifference price based off the utilities we found
+investment_prices = []
+for utility in investment_utils:
+    if i <= 0:
+        client = 'clientA'
+    elif i <= 1:
+        client = 'clientB'
+    else:
+        client = 'clientC'
+    investment_prices.append(util_inverse(utility,client))
+
+print(f'Utilities of each client for the first investment: {investment_utils}')
+print(f'Prices of first investment for each client: {investment_prices}')
+
+# get the maximum price it could be sold for
+max_price = np.max(investment_prices)
+
+# calculate utility of first investment but the payout is max_price
+investment_utils_max_price = []
+for i in range(0, 6, 2):
+    if i <= 1:
+        client = 'clientA'
+    elif i <= 3:
+        client = 'clientB'
+    else:
+        client = 'clientC'
+    investment_utils_max_price.append(calc_perceived_util(max_price,invest_prob_a1, client))
+
+investment_utils_max_price = np.array(investment_utils_max_price)
+#Find the difference betwwen utility scores of different payouts
+investment_util_diff = investment_utils_max_price - investment_utils
+
+print(f'Utility gain for each client: {investment_util_diff}')
+
+print(calc_perceived_util())
