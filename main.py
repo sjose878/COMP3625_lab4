@@ -73,13 +73,17 @@ data = np.array(data)
 print(data)
 perceived_values = []
 
+clients = ['clientA', 'clientB', 'clientC']
+
 #part 1
 for i in data:
     investment_client = str(i[0])
     investment_prob = float(i[1])
     investment_payout = int(i[2])
-    investment_perceived_util = calc_perceived_util(investment_payout, investment_prob, investment_client)
-    perceived_values.append([investment_perceived_util, investment_client])
+
+    for client in clients :
+        investment_perceived_util = calc_perceived_util(investment_payout, investment_prob, client)
+        perceived_values.append([investment_perceived_util, client, f'owner: {investment_client}'])
 
 print(f'Each client’s perceived utility of each investment: {perceived_values}')
 
@@ -88,12 +92,30 @@ indifferent_offers = []
 
 for i in perceived_values:
     dollars_offer = util_inverse(i[0], i[1])
-    indifferent_offers.append([dollars_offer, i[1]])
+    indifferent_offers.append([dollars_offer, i[1], i[2]])
 
-print(f'Amount that you could offer each client for each investment for them to be indifferent: {indifferent_offers}')
+print(f'\nAmount that you could offer each client for each investment for them to be indifferent: {indifferent_offers}')
 
 #TASK 3: Reflection
 #1. To whom should each of the 6 investments be sold? Why?
+
+#Investment 1: It should be sold to client C. This client values investment 1 the most out of each client
+# since they have the largest indifference value at $42286.44
+
+#Investment 2: It should be sold to client C. This client values investment 2 the most out of each client
+# since they have the largest indifference value at $9544.51
+
+#Investment 3: It should be sold to client C. This client values investment 3 the most out of each client
+# since they have the largest indifference value at $86606.60
+
+#Investment 4: It should be sold to client C. This client values investment 4 the most out of each client
+# since they have the largest indifference value at $14406.64
+
+#Investment 5: Client C should keep their investment. This client values investment 5 the most out of each client
+# since they have the largest indifference value at $957.66
+
+#Investment 6: Client C should keep their investment. This client values investment 6 the most out of each client
+# since they have the largest indifference value at $3261.32
 
 
 #2. Pick one investment that should be sold. Who should it be sold to, and what is the maximum price it could be sold for? What utility gain is provided to each party at that price?
